@@ -5,8 +5,6 @@ import json
 import numpy as np
 import pentapy as pp
 
-TO_BE_PRINTED = True
-
 def big_f(i, n, x):
     left = max(0, (i - 1) / n)
     right = min(1, (i + 1) / n)
