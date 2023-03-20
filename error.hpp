@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 
-template<class T>
-void error(T code, std::string msg) {
+template <class T> void error (T code, std::string msg)
+{
     std::cerr << "Error: " << msg << std::endl;
     throw code;
 }
