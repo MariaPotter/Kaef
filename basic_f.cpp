@@ -29,7 +29,7 @@ function<double(double)> functional_big_f(int i, int N) {
 }
 
 /*
-    Функция, возвраляющая функцию, которая реализует
+    Функция, возвращяющая функцию, которая реализует
     маленькую шапочку с левым концом i при сетке с точками
     [0..n]
 */
@@ -44,7 +44,7 @@ function<double(double)> functional_small_f(int i, int N) {
     };
 }
 
-function<double(double)> functional_hat(int k, int n) {
+function<double(double)> functional_f(int k, int n) {
     if (k % 2 == 0) return functional_big_f(k / 2, n);
     else return functional_small_f(k / 2, n);
 }
@@ -76,7 +76,6 @@ ToolWithSupp tool_f(int k, int N) {
 
 vector<vector<double> >gen_diag(int N) {
     // if (N % 2 == 1) error(-1, "N is odd");
-    // if (N < 100) error(-1, "N < 100");
 
     vector<double> a(2 * N - 1);
     vector<double> b(2 * N);
@@ -125,21 +124,15 @@ vector<vector<double> >gen_diag(int N) {
 }
 
 vector<double> gen_f(int N, std::function<double(double)> f) {
-    // if (N % 2 == 1) {
-    //     error(-1, "Now can generate b ony for even numbers");
-    // }
-
     vector<double> ret(2 * N + 1);
     
     for(int k = 0; k < 2 * N + 1; ++k) {
         double a = static_cast<double>(k / 2 - 1) / N + (k % 2 == 0 ? 0. : 1. / N);
         double b = static_cast<double>(k / 2 + 1) / N;
 
-        // ret[k] = (tool_f(k, N) * ToolWithSupp(Tool({0, 1}), 0, N, N)).integrate(false);
-
-        auto hat = functional_hat(k, N);
-        auto multilpied = [hat = hat, f = f](double x) -> double {
-            return hat(x) * f(x);
+        auto base = functional_f(k, N);
+        auto multilpied = [base = base, f = f](double x) -> double {
+            return base(x) * f(x);
         };
 
         ret[k] = integrate(a, b, N, multilpied);
@@ -155,7 +148,7 @@ vector<vector<double> > matr_initial(vector<vector<double> > diag, vector<double
     auto d = diag[3];
     auto e = diag[4];
 
-    int N = c.size() / 2;
+    int N = static_cast<int>(c.size()) / 2;
 
     c[0] = 1;
     b[0] = 4 * N;

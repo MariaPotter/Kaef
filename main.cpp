@@ -12,7 +12,7 @@ using namespace std;
 
 void push (vector<double> vec, string path) {
     FILE* fd = fopen(path.c_str(), "w");
-    int m = vec.size();
+    int m =  static_cast<int>(vec.size());
 
     for (int i = 0; i < m; ++i) {
         fprintf(fd, "%60.30e\n", vec[i]);
@@ -48,6 +48,6 @@ int main(int argc, char* argv[]) {
         running_main(stoi(argv[1]));
         return 0;
     } else
-        cout << "Некорректные входные аргументы :С " << endl;
+        cout << "Некорректные входные аргументы :С" << endl;
     return -1;
 }

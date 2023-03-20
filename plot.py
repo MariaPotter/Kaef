@@ -18,19 +18,21 @@ def main(k):
 
     parsed = json.loads(text)
 
-
     plt.figure(figsize=(15, 10), dpi=300)
 
     plt.plot(parsed['x'], parsed['y_count'], color='black')
     plt.plot(parsed['x'], parsed['y_anal'], color='orange')
 
-    plt.xlabel('x')
-    plt.ylabel('u')
+    plt.annotate('$X$', xy=(1, 0), xytext=(10,-7.5), ha='left', va='top', xycoords='axes fraction', textcoords='offset points')
+    plt.annotate('$U$', xy=(0, 1), xytext=(-35,2), ha='left', va='top', xycoords='axes fraction', textcoords='offset points')
 
-    plt.savefig('plot ' + k + '.png')
+    plt.title(f'N = {str(k)}', fontsize=30)
+    plt.figtext(0.65,0.843,'Невязка: ' + parsed['discrepancy'], fontsize='small')
+    
+    plt.savefig('out/plot ' + k + '.png', transparent=True)
 
 if __name__ == '__main__':
     if len (sys.argv) > 1:
         main(sys.argv[1])
     else:
-        main({100})
+        print("Некорректные входные аргументы :С")

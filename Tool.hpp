@@ -12,6 +12,8 @@
 extern const double k1;
 extern const double k2;
 
+template <class T>  T abs(T x){return (x>0)?x:-x;}
+
 class Tool {
     std::vector<double> coeff_;
     bool is_zero_;

@@ -107,7 +107,8 @@ def main():
     json_to_write = json.dumps({
         'x' : [i / N for i in range(N + 1)],
         'y_count': list(result),
-        'y_anal' : [anal_solution(i / N) for i in range(N + 1)]
+        'y_anal' : [anal_solution(i / N) for i in range(N + 1)],
+        'discrepancy' : "{:10.4e}".format(np.amax(errors))
     })
 
     fd = open('tmp/points.json', 'w')

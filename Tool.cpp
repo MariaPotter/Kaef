@@ -31,7 +31,7 @@ Tool operator+(const Tool& a, const Tool& b) {
 Tool operator-(const Tool& p) {
     vector<double> result(p.coeff_.size());
 
-    for(int i = 0; i < result.size(); ++i) result[i] = -p.coeff_[i];
+    for(int i = 0; i <  static_cast<int>(result.size()); ++i) result[i] = -p.coeff_[i];
 
     return Tool(result);
 }
@@ -45,7 +45,7 @@ Tool operator*(const Tool& a, const Tool& b) {
 
     vector<double> result(a.deg() + b.deg() + 1, 0);
 
-    for(int i = 0; i < result.size(); ++i) {
+    for(int i = 0; i < static_cast<int>(result.size()); ++i) {
         for(int j = 0; j <= i; ++j) {
             if(j > a.deg() || (i - j) > b.deg()) continue;
 
