@@ -1,12 +1,13 @@
-### This is solution of ODE using special method for my university task
+### This is solution of ODE using the run-through method
 
-**Notice:** you need *pentapy*, *numpy* and *matplotlib* python3 libraries to use this repo code. You can simply install them using pip.
+**Notice:** you need *pentapy*, *numpy* and *matplotlib* python3 libraries to use this repo code. \
+You can simply install them using ```python3 -m pip install <module>```.
 
-To build, completely test solution and create plot just run
+To build, complete test solution and create plots just run
 
     ./test.bash
 
-Plot will be avaliable in file *plot <N>.png*.
+Plot will be avaliable in file *"./out/plot \<N\>.png"*.
 
 You can just build binary solver with
 
