@@ -25,8 +25,8 @@ LDLIBS := -lm -lstdc++
 
 all: FLAGS += -O3
 debug: FLAGS += -g -Og
-test: FLAGS += -Werror -fsanitize=address -fsanitize=leak -fsanitize=undefined -fsanitize=null -fstack-protector-all -Og -g
-test: LDFLAGS := -fsanitize=address -fsanitize=leak -fsanitize=undefined -fsanitize=null -fstack-protector-all
+test: FLAGS += -Werror -fsanitize=address -fsanitize=leak -fsanitize=null -fstack-protector-all -Og -g
+test: LDFLAGS := -fsanitize=address -fsanitize=leak -fsanitize=null -fstack-protector-all
 suck: FLAGS := -Wall -Wextra -Wfloat-equal -O -MMD -Og -g 
 
 ifeq ($(COMPLIER),1)

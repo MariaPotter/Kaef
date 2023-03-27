@@ -1,10 +1,9 @@
+#include "basic_f.hpp"
+
 #include "Tool.hpp"
 #include "calculus.hpp"
-#include "error.hpp"
 
-#include <algorithm>
 #include <cmath>
-#include <functional>
 
 using namespace std;
 
@@ -13,7 +12,7 @@ const double k2 = 1.5;
 
 /*
     Функция, возвращяющая функцию, которая реализует
-    большую шапочку с центром i при сетке с точками
+    большую параболу с центром i при сетке с точками
     [0..n]
 */
 
@@ -28,13 +27,14 @@ function<double (double)> functional_big_f (unsigned int i, unsigned int N)
         else
             return -pow (static_cast<double> (N) *
                              (x - static_cast<double> (i) / N),
-                         2) + 1.;
+                         2) +
+                   1.;
     };
 }
 
 /*
     Функция, возвращяющая функцию, которая реализует
-    маленькую шапочку с левым концом i при сетке с точками
+    маленькую параболу с левым концом i при сетке с точками
     [0..n]
 */
 
@@ -49,7 +49,8 @@ function<double (double)> functional_small_f (unsigned int i, unsigned int N)
         else
             return -pow (2. * static_cast<double> (N) *
                              (x - (static_cast<double> (i) + 0.5) / N),
-                         2) + 1.;
+                         2) +
+                   1.;
     };
 }
 
@@ -65,18 +66,18 @@ function<double (double)> functional_f (unsigned int k, unsigned int n)
 
 Tool tool_big_f (unsigned int i, unsigned int N)
 {
-    double a = -1 * static_cast <int> (N * N);
+    double a = -1 * static_cast<int> (N * N);
     double b = 2 * i * N;
-    double c = 1 - static_cast <int> (i * i);
+    double c = 1 - static_cast<int> (i * i);
 
     return Tool ({c, b, a});
 }
 
 Tool tool_small_f (unsigned int i, unsigned int N)
 {
-    double a = -4 * static_cast <int> (N * N);
+    double a = -4 * static_cast<int> (N * N);
     double b = 4 * N + 8 * i * N;
-    double c = -4 * static_cast <int> (i) - 4 * static_cast <int> (i * i);
+    double c = -4 * static_cast<int> (i) - 4 * static_cast<int> (i * i);
 
     return Tool ({c, b, a});
 }
@@ -90,8 +91,6 @@ ToolWithSupp tool_f (unsigned int k, unsigned int N)
 
 vector<vector<double>> gen_diag (unsigned int N)
 {
-    // if (N % 2 == 1) error(-1, "N is odd");
-
     vector<double> a (2 * N - 1);
     vector<double> b (2 * N);
     vector<double> c (2 * N + 1);
@@ -159,8 +158,8 @@ vector<double> gen_f (unsigned int N, std::function<double (double)> f)
 
     for (unsigned int k = 0; k < 2 * N + 1; ++k)
     {
-        double a =
-            static_cast<double> (static_cast<int> (k / 2) - 1) / N + (k % 2 == 0 ? 0. : 1. / N);
+        double a = static_cast<double> (static_cast<int> (k / 2) - 1) / N +
+                   (k % 2 == 0 ? 0. : 1. / N);
         double b = static_cast<double> (k / 2 + 1) / N;
 
         auto base       = functional_f (k, N);

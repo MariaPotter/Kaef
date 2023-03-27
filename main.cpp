@@ -1,8 +1,6 @@
 #include "basic_f.hpp"
 #include "calculus.hpp"
 
-#include <cmath>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 
@@ -10,8 +8,8 @@ using namespace std;
 
 void push (vector<double> vec, string path)
 {
-    FILE* fd = fopen (path.c_str(), "w");
-    unsigned int   m  = static_cast<unsigned int> (vec.size());
+    FILE*        fd = fopen (path.c_str(), "w");
+    unsigned int m  = static_cast<unsigned int> (vec.size());
 
     for (unsigned int i = 0; i < m; ++i) { fprintf (fd, "%60.30e\n", vec[i]); }
 
@@ -46,7 +44,7 @@ int main (int argc, char* argv[])
 {
     if (argc > 1)
     {
-        running_main (static_cast <unsigned int> (max(stoi (argv[1]),2)));
+        running_main (static_cast<unsigned int> (max (stoi (argv[1]), 2)));
         return 0;
     }
     else cout << "Некорректные входные аргументы :С" << endl;

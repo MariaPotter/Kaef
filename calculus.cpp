@@ -1,17 +1,18 @@
-#include "error.hpp"
+#include "calculus.hpp"
 
-#include <functional>
+#include "error.hpp"
 
 using namespace std;
 
-double integrate (double a, double b, unsigned int n, function<double (double)> f)
+double integrate (double a, double b, unsigned int n,
+                  function<double (double)> f)
 {
     if (n < 2) error (-1, "n < 2 in integrate");
 
     double h = (b - a) / (n - 1);
 
     double result = 0;
-    for (int i = 0; i < static_cast <int>(n) - 1; ++i)
+    for (int i = 0; i < static_cast<int> (n) - 1; ++i)
     {
         double x = a + h * (static_cast<double> (i) + 0.5);
 

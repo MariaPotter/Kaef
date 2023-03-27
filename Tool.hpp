@@ -3,8 +3,6 @@
 
 #include "error.hpp"
 
-#include <algorithm>
-#include <cstdlib>
 #include <iostream>
 #include <vector>
 
@@ -49,7 +47,7 @@ class Tool
                 for (int i = d; i >= 0; --i)
                 {
                     ret *= x;
-                    ret += coeff_[static_cast <unsigned int> (i)];
+                    ret += coeff_[static_cast<unsigned int> (i)];
                 }
 
                 return ret;
@@ -63,9 +61,10 @@ class Tool
             if (d == -1 || d == 0) return Tool ({0});
             else
             {
-                std::vector<double> result (static_cast <unsigned int> (d));
+                std::vector<double> result (static_cast<unsigned int> (d));
 
-                for (unsigned int i = 0; i < static_cast <unsigned int> (d); ++i) result[i] = (i + 1) * coeff_[i + 1];
+                for (unsigned int i = 0; i < static_cast<unsigned int> (d); ++i)
+                    result[i] = (i + 1) * coeff_[i + 1];
 
                 return Tool (result);
             }
@@ -75,10 +74,11 @@ class Tool
         {
             int d = deg();
 
-            std::vector<double> result (static_cast <unsigned int> (d + 2));
+            std::vector<double> result (static_cast<unsigned int> (d + 2));
 
             result[0] = 0;
-            for (unsigned int i = 1; i < static_cast <unsigned int> (d + 2); ++i) result[i] = coeff_[i - 1] / i;
+            for (unsigned int i = 1; i < static_cast<unsigned int> (d + 2); ++i)
+                result[i] = coeff_[i - 1] / i;
 
             Tool ad (result);
 
@@ -92,19 +92,22 @@ class Tool
             if (d == -1) std::cout << 0;
             else
             {
-                for (unsigned int i = 0; i < static_cast <unsigned int> (d + 1); ++i)
+                for (unsigned int i = 0; i < static_cast<unsigned int> (d + 1);
+                     ++i)
                 {
                     if (i == 0) std::cout << coeff_[0];
                     else if (i == 1)
                     {
                         if (abs (coeff_[i]) < eps_) continue;
-                        else if (coeff_[i] > 0) std::cout << "+" << coeff_[i] << "x";
+                        else if (coeff_[i] > 0)
+                            std::cout << "+" << coeff_[i] << "x";
                         else std::cout << coeff_[i] << "x";
                     }
                     else
                     {
                         if (abs (coeff_[i]) < eps_) continue;
-                        else if (coeff_[i] > 0) std::cout << "+" << coeff_[i] << "x^" << i;
+                        else if (coeff_[i] > 0)
+                            std::cout << "+" << coeff_[i] << "x^" << i;
                         else std::cout << coeff_[i] << "x^" << i;
                     }
                 }
@@ -121,10 +124,10 @@ class Tool
 
 class ToolWithSupp
 {
-        Tool tool_;
-        int  start_;
-        int  end_;
-        unsigned int  N_;
+        Tool         tool_;
+        int          start_;
+        int          end_;
+        unsigned int N_;
 
     public:
         ToolWithSupp (Tool tool, int start, int end, unsigned int N)
@@ -132,7 +135,7 @@ class ToolWithSupp
         {
 
             start_ = std::max (start_, 0);
-            end_   = std::min (end_,static_cast <int> (N_));
+            end_   = std::min (end_, static_cast<int> (N_));
         };
 
         ToolWithSupp derivative() const
@@ -152,7 +155,8 @@ class ToolWithSupp
                 if (N_ % 2 == 0)
                 {        // N_ is even
                     double k = 1;
-                    if (enable_k) k = end_ <= static_cast<int> (N_) / 2 ? k1 : k2;
+                    if (enable_k)
+                        k = end_ <= static_cast<int> (N_) / 2 ? k1 : k2;
 
                     return k * tool_.integrate (a, c);
                 }
