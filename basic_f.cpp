@@ -17,7 +17,7 @@ const double k2 = 1.5;
     [0..n]
 */
 
-function<double (double)> functional_big_f (int i, int N)
+function<double (double)> functional_big_f (unsigned int i, unsigned int N)
 {
     return [N = N, i = i] (double x) -> double
     {
@@ -38,7 +38,7 @@ function<double (double)> functional_big_f (int i, int N)
     [0..n]
 */
 
-function<double (double)> functional_small_f (int i, int N)
+function<double (double)> functional_small_f (unsigned int i, unsigned int N)
 {
     return [N = N, i = i] (double x) -> double
     {
@@ -53,7 +53,7 @@ function<double (double)> functional_small_f (int i, int N)
     };
 }
 
-function<double (double)> functional_f (int k, int n)
+function<double (double)> functional_f (unsigned int k, unsigned int n)
 {
     if (k % 2 == 0) return functional_big_f (k / 2, n);
     else return functional_small_f (k / 2, n);
@@ -63,32 +63,32 @@ function<double (double)> functional_f (int k, int n)
     Аналоги функций выше, реализованные как многочлены
 */
 
-Tool tool_big_f (int i, int N)
+Tool tool_big_f (unsigned int i, unsigned int N)
 {
-    double a = -N * N;
+    double a = -1 * static_cast <int> (N * N);
     double b = 2 * i * N;
-    double c = 1 - i * i;
+    double c = 1 - static_cast <int> (i * i);
 
     return Tool ({c, b, a});
 }
 
-Tool tool_small_f (int i, int N)
+Tool tool_small_f (unsigned int i, unsigned int N)
 {
-    double a = -4 * N * N;
+    double a = -4 * static_cast <int> (N * N);
     double b = 4 * N + 8 * i * N;
-    double c = -4 * i - 4 * i * i;
+    double c = -4 * static_cast <int> (i) - 4 * static_cast <int> (i * i);
 
     return Tool ({c, b, a});
 }
 
-ToolWithSupp tool_f (int k, int N)
+ToolWithSupp tool_f (unsigned int k, unsigned int N)
 {
     if (k % 2 == 0)
         return ToolWithSupp (tool_big_f (k / 2, N), k / 2 - 1, k / 2 + 1, N);
     else return ToolWithSupp (tool_small_f (k / 2, N), k / 2, k / 2 + 1, N);
 }
 
-vector<vector<double>> gen_diag (int N)
+vector<vector<double>> gen_diag (unsigned int N)
 {
     // if (N % 2 == 1) error(-1, "N is odd");
 
@@ -98,7 +98,7 @@ vector<vector<double>> gen_diag (int N)
     vector<double> d (2 * N);
     vector<double> e (2 * N - 1);
 
-    for (int k = 0; k < 2 * N + 1; ++k)
+    for (unsigned int k = 0; k < 2 * N + 1; ++k)
     {
         if (k <= 2 * N - 2)
         {
@@ -153,14 +153,14 @@ vector<vector<double>> gen_diag (int N)
     return {a, b, c, d, e};
 }
 
-vector<double> gen_f (int N, std::function<double (double)> f)
+vector<double> gen_f (unsigned int N, std::function<double (double)> f)
 {
     vector<double> ret (2 * N + 1);
 
-    for (int k = 0; k < 2 * N + 1; ++k)
+    for (unsigned int k = 0; k < 2 * N + 1; ++k)
     {
         double a =
-            static_cast<double> (k / 2 - 1) / N + (k % 2 == 0 ? 0. : 1. / N);
+            static_cast<double> (static_cast<int> (k / 2) - 1) / N + (k % 2 == 0 ? 0. : 1. / N);
         double b = static_cast<double> (k / 2 + 1) / N;
 
         auto base       = functional_f (k, N);
@@ -182,7 +182,7 @@ vector<vector<double>> matr_initial (vector<vector<double>> diag,
     auto d = diag[3];
     auto e = diag[4];
 
-    int N = static_cast<int> (c.size()) / 2;
+    unsigned int N = static_cast<unsigned int> (c.size()) / 2;
 
     c[0] = 1;
     b[0] = 4 * N;

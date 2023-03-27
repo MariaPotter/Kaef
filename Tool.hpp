@@ -49,7 +49,7 @@ class Tool
                 for (int i = d; i >= 0; --i)
                 {
                     ret *= x;
-                    ret += coeff_[i];
+                    ret += coeff_[static_cast <unsigned int> (i)];
                 }
 
                 return ret;
@@ -63,9 +63,9 @@ class Tool
             if (d == -1 || d == 0) return Tool ({0});
             else
             {
-                std::vector<double> result (d);
+                std::vector<double> result (static_cast <unsigned int> (d));
 
-                for (int i = 0; i < d; ++i) result[i] = (i + 1) * coeff_[i + 1];
+                for (unsigned int i = 0; i < static_cast <unsigned int> (d); ++i) result[i] = (i + 1) * coeff_[i + 1];
 
                 return Tool (result);
             }
@@ -75,10 +75,10 @@ class Tool
         {
             int d = deg();
 
-            std::vector<double> result (d + 2);
+            std::vector<double> result (static_cast <unsigned int> (d + 2));
 
             result[0] = 0;
-            for (int i = 1; i < d + 2; ++i) result[i] = coeff_[i - 1] / i;
+            for (unsigned int i = 1; i < static_cast <unsigned int> (d + 2); ++i) result[i] = coeff_[i - 1] / i;
 
             Tool ad (result);
 
@@ -92,7 +92,7 @@ class Tool
             if (d == -1) std::cout << 0;
             else
             {
-                for (int i = 0; i < d + 1; ++i)
+                for (unsigned int i = 0; i < static_cast <unsigned int> (d + 1); ++i)
                 {
                     if (i == 0) std::cout << coeff_[0];
                     else if (i == 1)
@@ -124,15 +124,15 @@ class ToolWithSupp
         Tool tool_;
         int  start_;
         int  end_;
-        int  N_;
+        unsigned int  N_;
 
     public:
-        ToolWithSupp (Tool tool, int start, int end, int N)
+        ToolWithSupp (Tool tool, int start, int end, unsigned int N)
             : tool_ (tool), start_ (start), end_ (end), N_ (N)
         {
 
             start_ = std::max (start_, 0);
-            end_   = std::min (end_, N_);
+            end_   = std::min (end_,static_cast <int> (N_));
         };
 
         ToolWithSupp derivative() const
@@ -152,7 +152,7 @@ class ToolWithSupp
                 if (N_ % 2 == 0)
                 {        // N_ is even
                     double k = 1;
-                    if (enable_k) k = end_ <= N_ / 2 ? k1 : k2;
+                    if (enable_k) k = end_ <= static_cast<int> (N_) / 2 ? k1 : k2;
 
                     return k * tool_.integrate (a, c);
                 }
@@ -160,10 +160,10 @@ class ToolWithSupp
                 {        // N_ is odd
                     if (enable_k)
                     {
-                        if (end_ + start_ == N_ && enable_k)
+                        if (end_ + start_ == static_cast<int> (N_) && enable_k)
                             return k1 * tool_.integrate (a, b) +
                                    k2 * tool_.integrate (b, c);
-                        else if (end_ <= N_ / 2)
+                        else if (end_ <= static_cast<int> (N_) / 2)
                             return k1 * tool_.integrate (a, c);
                         else return k2 * tool_.integrate (a, c);
                     }

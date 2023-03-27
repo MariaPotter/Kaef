@@ -13,12 +13,12 @@ Tool operator+ (const Tool& a, const Tool& b)
 
     int d = max (a.deg(), b.deg());
 
-    vector<double> result (d + 1);
+    vector<double> result (static_cast <unsigned int> (d + 1));
 
-    for (int i = 0; i < d + 1; ++i)
+    for (unsigned int i = 0; i < static_cast <unsigned int> (d + 1); ++i)
     {
-        if (i <= a.deg() && i <= b.deg()) result[i] = a.coeff_[i] + b.coeff_[i];
-        else if (i > a.deg()) result[i] = b.coeff_[i];
+        if (static_cast <int> (i) <= a.deg() && static_cast <int> (i) <= b.deg()) result[i] = a.coeff_[i] + b.coeff_[i];
+        else if (static_cast <int> (i) > a.deg()) result[i] = b.coeff_[i];
         else result[i] = a.coeff_[i];
     }
 
@@ -29,7 +29,7 @@ Tool operator- (const Tool& p)
 {
     vector<double> result (p.coeff_.size());
 
-    for (int i = 0; i < static_cast<int> (result.size()); ++i)
+    for (unsigned int i = 0; i < static_cast<unsigned int> (result.size()); ++i)
         result[i] = -p.coeff_[i];
 
     return Tool (result);
@@ -41,13 +41,13 @@ Tool operator* (const Tool& a, const Tool& b)
 {
     if (a.deg() == -1 || b.deg() == -1) return Tool ({0});
 
-    vector<double> result (a.deg() + b.deg() + 1, 0);
+    vector<double> result (static_cast <unsigned int> (a.deg() + b.deg() + 1), 0);
 
-    for (int i = 0; i < static_cast<int> (result.size()); ++i)
+    for (unsigned int i = 0; i < static_cast<unsigned int> (result.size()); ++i)
     {
-        for (int j = 0; j <= i; ++j)
+        for (unsigned int j = 0; j <= i; ++j)
         {
-            if (j > a.deg() || (i - j) > b.deg()) continue;
+            if (static_cast <int> (j) > a.deg() || static_cast <int> (i - j) > b.deg()) continue;
 
             result[i] += a.coeff_[j] * b.coeff_[i - j];
         }

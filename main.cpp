@@ -11,14 +11,14 @@ using namespace std;
 void push (vector<double> vec, string path)
 {
     FILE* fd = fopen (path.c_str(), "w");
-    int   m  = static_cast<int> (vec.size());
+    unsigned int   m  = static_cast<unsigned int> (vec.size());
 
-    for (int i = 0; i < m; ++i) { fprintf (fd, "%60.30e\n", vec[i]); }
+    for (unsigned int i = 0; i < m; ++i) { fprintf (fd, "%60.30e\n", vec[i]); }
 
     fclose (fd);
 }        //Запись в файлы
 
-void running_main (int N)
+void running_main (unsigned int N)
 {
 
     auto func = [] (double x) -> double
@@ -46,7 +46,7 @@ int main (int argc, char* argv[])
 {
     if (argc > 1)
     {
-        running_main (stoi (argv[1]));
+        running_main (static_cast <unsigned int> (max(stoi (argv[1]),2)));
         return 0;
     }
     else cout << "Некорректные входные аргументы :С" << endl;
