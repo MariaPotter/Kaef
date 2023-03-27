@@ -7,13 +7,14 @@ solute(){
     fi
     echo "N = $1"
     ./main $1
-    ./solve_with_python.py
+    ./solve.py
     ./plot.py $1
 }
 
 if (make 1> /dev/null); 
 then
-    solute 6 1
+    solute 2 1
+    solute 6
     solute 10
     solute 20
     solute 50

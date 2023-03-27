@@ -5,7 +5,7 @@ You can simply install them using ```python3 -m pip install <module>```.
 
 To build, complete test solution and create plots just run
 
-    ./test.bash
+    ./test.sh
 
 Plot will be avaliable in file *"./out/plot \<N\>.png"*.
 
